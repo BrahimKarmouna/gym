@@ -274,8 +274,6 @@
                             @click="updateClient(client)"
                            
                         ></q-btn>
-            
-        
         </q-item>
 
         <q-item clickable v-close-popup @click="onItemClick">

@@ -7,6 +7,7 @@ import Clients from "../pages/Client/Clients.vue";
 import Plans from "../pages/plans/index.vue";
 import Payments from "../pages/Payments/index.vue";
 import Login from "../pages/auth/login.vue";
+import Profile from "../profile/index.vue";
 
 // Define your routes
 const routes = [
@@ -43,6 +44,12 @@ const routes = [
         path: "/login",
         name: "Login",
         component: Login,
+    },
+    {
+        path:"/profile",
+        name:"Profile",
+        component:Profile,
+        meta: { requiresAuth: true },
     },
 ];
 

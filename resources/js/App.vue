@@ -1,11 +1,11 @@
 <template>
-  <div id="app" class="w-full h-full">
+  <div id="app" class="w-full h-full " >
     <!-- Layout wrapper -->
     <q-layout view="lHh LpR lFf" class="w-full h-full">
 
       <!-- Header Section -->
-      <div class="rounded-r bg-white border mb-7 xl:hidden flex justify-between w-full p-6 items-center">
-        <div class="flex justify-between items-center space-x-3">
+      <div class="rounded-r bg-white border mb-7 xl:hidden flex justify-between w-full p-6 items-center  ">
+        <div class="flex justify-between items-center space-x-3  ">
          <img class="w-12 h-12" :src="Logo" alt="logo" />
           <p class="text-2xl mb-0 leading-6 font-bold text-black">Sultan Gym</p>
         </div>
@@ -17,7 +17,27 @@
               <path d="M4 18H20" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
-          <button aria-label="close" id="close" class="focus:outline-none focus:ring-2">
+          <q-avatar @click="menu = !menu" size="40px" class="cursor-pointer">
+    <img src="https://avatars.githubusercontent.com/u/26676378?v=4" alt="Profile Image" />
+  </q-avatar>
+
+  <q-menu v-model="menu" auto-close transition-show="scale" transition-hide="scale">
+    <q-list class="w-36" >
+      <q-item clickable class="w-36">
+        <q-item-section>
+       <router-link to="/profile">   <span>My Profile</span> </router-link>
+        </q-item-section>
+      </q-item>
+      <q-item clickable class="w-36">
+        <q-item-section 
+        @click="handleLogout()"
+         >
+          <span>Logout</span>
+        </q-item-section>
+      </q-item>
+    </q-list>
+  </q-menu>
+          <button aria-label="close" id="close" class=" hidden focus:outline-none focus:ring-2 md: ">
             <q-btn @click="toggleDrawer">
               <q-icon color="black" size="lg " name="menu"><i class="fa-solid fa-xmark"></i></q-icon>
             </q-btn>
@@ -47,9 +67,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { h, ref } from "vue";
 import SidebarMenu from "../components/SidebarMenu.vue";
 import Logo from '../../resources/gym.png';
+import router from "../router";
 
 const drawer = ref(true);
 
@@ -57,6 +78,18 @@ const drawer = ref(true);
 function toggleDrawer() {
   drawer.value = !drawer.value;
 }
+const isAuthenticated = localStorage.getItem("auth_token");
+const handleLogout = () => {
+    // Remove the authentication token or any other data indicating user authentication
+    localStorage.removeItem("auth_token");
+
+    // Refresh the page to reflect the updated authentication state
+    window.location.reload();
+
+    // Optionally, you can redirect to login page explicitly
+    // router.push({ name: "Login" });
+};
+
 </script>
 
 <style scoped>
