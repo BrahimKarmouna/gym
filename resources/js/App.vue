@@ -21,13 +21,13 @@
           </button>
           <button aria-label="close" id="close" class="focus:outline-none focus:ring-2">
             <q-btn @click="toggleDrawer">
-              <q-icon color="black" size="lg" name="menu"><i class="fa-solid fa-xmark"></i></q-icon>
+              <q-icon color="black" size="lg " name="menu"><i class="fa-solid fa-xmark"></i></q-icon>
             </q-btn>
           </button>
         </div>
       </div>
 
-      <!-- Sidebar Menu Section -->
+      <!-- Sidebar Menu Sections -->
       <div class="flex">
         <!-- Sidebar takes automatic width -->
         <div class="w-auto">
