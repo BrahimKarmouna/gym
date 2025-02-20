@@ -2,16 +2,14 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PaymentPlanController;
-//model plans 
-
-// import controller 
 use App\Http\Controllers\ClientController;
+
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// clients 
+// clients
 
 
 Route::get('/clients', ClientController::class . '@index');
@@ -23,7 +21,7 @@ Route::delete('/clients/{id}', ClientController::class . '@destroy');
 
 // plans
 
-Route::get('/plans', [App\Http\Controllers\PaymentPlanController::class, 'index']);
+Route::get('/plans', [App\Http\Controllers\PlanController::class, 'index']);
 Route::get('/plans/{id}', [App\Http\Controllers\PlanController::class, 'show']);
 Route::post('/plans', [App\Http\Controllers\PlanController::class, 'store']);
 Route::put('/plans/{id}', [App\Http\Controllers\PlanController::class, 'update']);
