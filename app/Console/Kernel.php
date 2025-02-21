@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Exécuter la mise à jour des statuts des clients chaque jour à minuit
-        $schedule->command('clients:update-status')->daily();
+        $schedule->command('clients:update-status')->everyMinute();
     }
 
     /**
@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     protected function commands()
     {
         // Charger les commandes dans le dossier app/Console/Commands
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

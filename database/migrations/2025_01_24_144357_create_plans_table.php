@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->decimal('price', 8, 2);
-            $table->string('duration'); // in days or months
+            $table->integer('duration'); // months
             $table->timestamps();
         });
     }

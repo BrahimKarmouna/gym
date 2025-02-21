@@ -16,17 +16,17 @@ class UpdateClientStatus extends Command
         $today = Carbon::today();
 
         // Mettre à jour le statut de paiement et d'assurance si la date est dépassée
-        Client::where('subscription_expired_date', '<', $today)
+        Client::where('subscription_expired_date', '<=', $today)
             ->update(['is_payed' => false]);
 
-        Client::where('assurance_expired_date', '<', $today)
+        Client::where('assurance_expired_date', '<=', $today)
             ->update(['is_assured' => false]);
 
         // Mettre à jour le statut de paiement et d'assurance si la date est toujours valide
-        Client::where('subscription_expired_date', '>=', $today)
+        Client::where('subscription_expired_date', '>', $today)
             ->update(['is_payed' => true]);
 
-        Client::where('assurance_expired_date', '>=', $today)
+        Client::where('assurance_expired_date', '>', $today)
             ->update(['is_assured' => true]);
 
         $this->info('Statuts des clients mis à jour avec succès.');

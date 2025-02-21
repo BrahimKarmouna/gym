@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
@@ -18,7 +19,11 @@ Route::get('/clients/{id}', ClientController::class . '@show');
 Route::post('/clients', ClientController::class . '@store');
 Route::put('/clients/{id}', ClientController::class . '@update');
 Route::delete('/clients/{id}', ClientController::class . '@destroy');
-
+// payments
+Route::get('/payments', PaymentController::class . '@index');
+Route::get('/payments/{id}', PaymentController::class . '@show');
+Route::post('/payments', PaymentController::class . '@store');
+Route::put('/payments/{id}', PaymentController::class . '@update');
 
 // plans
 

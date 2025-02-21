@@ -83,7 +83,7 @@ const plans = ref([]);
 const createPlan = () => {
     axios.post('/api/plans', {
         name: 'Plan 1',
-        duration: 30,
+        duration: 1,
         price: 100
 
 

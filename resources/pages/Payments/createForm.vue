@@ -4,9 +4,9 @@
             v-model="visible"
             persistent
         >
-            <q-card style="min-width: 900px; height: 700px;">
+            <q-card style="min-width: 900px; height: 600px;">
                 <q-card-section class="row justify-between items-center">
-                    <div class="text-h6">Add Client Information</div>
+                    <div class="text-h6">Add Payment</div>
                     <q-btn
                         flat
                         round
@@ -18,84 +18,36 @@
 
                 <q-card-section class="q-pt-none">
                     <div class="row q-col-gutter-md">
-                        <!-- Full Name -->
-                        <q-input
-                            dense
-                            v-model="client.Full_name"
-                            label="Full Name"
+                        <!-- Client Selection -->
+                        <q-select
+                            v-model="payment.client"
+                            :options="clients"
+                            label="Select Client"
                             filled
                             class="col-6 q-mb-md"
-                        />
-                        <!-- ID Card Number -->
-                        <q-input
-                            dense
-                            v-model="client.id_card_number"
-                            label="ID Card Number"
-                            filled
-                            class="col-6 q-mb-md"
+                            option-value="id"
+                            option-label="Full_name"
                         />
 
-                        <!-- Date of Birth -->
+                        <!-- Plan Selection -->
+                        <q-select
+                            v-model="payment.plan"
+                            :options="plans"
+                            label="Select Plan"
+                            filled
+                            class="col-6 q-mb-md"
+                            option-value="id"
+                            option-label="name"
+                        />
+
+                        <!-- Payment Date -->
                         <q-input
                             dense
-                            v-model="client.date_of_birth"
-                            label="Date of Birth"
+                            v-model="payment.payment_date"
+                            label="Payment Date"
                             type="date"
                             filled
                             class="col-6 q-mb-md"
-                        />
-                        <!-- Phone Number -->
-                        <q-input
-                            dense
-                            v-model="client.phone"
-                            label="Phone Number"
-                            type="tel"
-                            filled
-                            class="col-6 q-mb-md"
-                        />
-
-                        <!-- Email -->
-                        <q-input
-                            dense
-                            v-model="client.email"
-                            label="Email"
-                            type="email"
-                            filled
-                            class="col-6 q-mb-md"
-                        />
-                        <!-- Address -->
-                        <q-input
-                            dense
-                            v-model="client.address"
-                            label="Address"
-                            filled
-                            class="col-6 q-mb-md"
-                        />
-
-                        <!-- Gym ID -->
-                        <q-input
-                            dense
-                            v-model="client.gym_id"
-                            label="Gym ID"
-                            type="number"
-                            filled
-                            class="col-6 q-mb-md"
-                        />
-
-                        <!-- Uploads alignés en bas -->
-                        <q-uploader
-                            label="Upload ID Card Picture"
-                            accept="image/*"
-                            filled
-                            class="col-6 q-mb-md"
-                            @added="handleIdCardUpload"
-                        />
-                        <q-uploader
-                            label="Upload Client Picture"
-                            accept="image/*"
-                            filled
-                            class="col-6 q-mb-md"
-                            @added="handleClientPictureUpload"
                         />
                     </div>
                 </q-card-section>
@@ -111,8 +63,8 @@
                     />
                     <q-btn
                         flat
-                        label="Save Client"
-                        @click="saveClient"
+                        label="Save Payment"
+                        @click="savePayment"
                     />
                 </q-card-actions>
             </q-card>
@@ -120,80 +72,63 @@
     </div>
 </template>
 
-
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import axios from "axios";
 
-// Définition des props
-const visible = defineModel("visible", { default: true, type: Boolean });
+// Visibility control
+const visible = defineModel("visible", { default: false, type: Boolean });
 
-// Objet client
-const client = ref({
-    Full_name: "",
-    date_of_birth: "",
-    address: "",
-    gym_id: "",
-    id_card_picture: null,
-    client_picture: null,
-    id_card_number: "",
-    email: "",
-    phone: "",
+// Payment form model
+const payment = ref({
+    client: null,  // Client ID will be selected here
+    plan: null,    // Plan ID will be selected here
+    payment_date: "2025-02-21"  // Default payment date
 });
 
-// Capture les fichiers uploadés
-const handleIdCardUpload = (files) => {
-    client.value.id_card_picture = files[0]; // Prend le premier fichier
-};
+// Clients and plans data
+const clients = ref([]);
+const plans = ref([]);
 
-const handleClientPictureUpload = (files) => {
-    client.value.client_picture = files[0]; // Prend le premier fichier
-};
+// Fetch clients and plans data on component mount
+onMounted(() => {
+    // Fetch clients
+    axios.get("/api/clients").then((response) => {
+        clients.value = response.data;
+    });
 
-// Fonction pour fermer le modal
+    // Fetch plans
+    axios.get("/api/plans").then((response) => {
+        plans.value = response.data;
+    });
+});
+
+// Close modal and reset form state
 const closeModal = () => {
     visible.value = false;
-    resetClient();
+    resetPayment();
 };
 
-// Réinitialiser les valeurs après enregistrement
-const resetClient = () => {
-    client.value = {
-        Full_name: "",
-        date_of_birth: "",
-        address: "",
-        gym_id: "",
-        id_card_picture: null,
-        client_picture: null,
-        id_card_number: "",
-        email: "",
-        phone: "",
+// Reset the payment form
+const resetPayment = () => {
+    payment.value = {
+        client: null,
+        plan: null,
+        payment_date: new Date().toISOString().substr(0, 10), // Reset to today's date
     };
 };
 
-// Fonction pour enregistrer un client
-const saveClient = () => {
-    const formData = new FormData();
-    formData.append("Full_name", client.value.Full_name);
-    formData.append("date_of_birth", client.value.date_of_birth);
-    formData.append("address", client.value.address);
-    formData.append("gym_id", client.value.gym_id);
-    formData.append("id_card_picture", client.value.id_card_picture);
-    formData.append("client_picture", client.value.client_picture);
-    formData.append("id_card_number", client.value.id_card_number);
-    formData.append("email", client.value.email);
-    formData.append("phone", client.value.phone);
-
+// Save payment to the backend
+const savePayment = () => {
+    // Sending the payment data (with selected client_id, plan_id, and payment_date)
     axios
-        .post("/api/clients", formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-        })
+        .post("/api/payments", payment.value)
         .then(() => {
-            console.log("Client saved successfully.");
-            closeModal();
+            console.log("Payment saved successfully.");
+            closeModal();  // Close the modal after saving
         })
         .catch((error) => {
-            console.error("Error saving client:", error);
+            console.error("Error saving payment:", error);
         });
 };
 </script>
