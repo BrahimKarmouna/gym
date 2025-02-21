@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
-
 use Illuminate\Http\Request;
+
 
 class ClientController extends Controller
 {
@@ -44,6 +44,7 @@ class ClientController extends Controller
             'address' => 'required|string|max:255',
             'id_card_picture' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'client_picture' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            
             'email' => 'required|email|unique:clients,email',
             'phone' => 'nullable|string|max:20 ',
         ]);
@@ -86,6 +87,16 @@ public function show($id)
 
     return response()->json($client);
 }
+
+// Example in a Controller method
+public function updateClientStatus($clientId)
+{
+    $client = Client::findOrFail($clientId);
+    $client->updateStatusBasedOnExpiration();
+
+    // Optionally, return some response or data
+}
+
 public function update(Request $request, $id)
 {
     $client = Client::find($id);

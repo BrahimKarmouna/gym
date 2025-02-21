@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             
             // Corrected foreign key references
-            $table->foreignId('payment_plan_id')->constrained()->onDelete('cascade');
+            $table->foreignId('plan_id')->constrained()->onDelete('cascade');
             $table->foreignId('insurance_plan_id')->constrained()->onDelete('cascade');
             
             $table->timestamps();
