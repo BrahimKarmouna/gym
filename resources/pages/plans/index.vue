@@ -1,9 +1,12 @@
 <template>
+        <CreateForm v-model:visible="is_visible" />
+
     <q-card-section class=" pt-10 shadow-none">
         <q-btn
             class="mb-6"
             color="primary"
             label="Add Plan"
+            @click="OpenModal"
         />
     </q-card-section>
 
@@ -77,7 +80,13 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import CreateForm from './createForm.vue';
 
+const is_visible = ref(false);
+
+const OpenModal = () => {
+    is_visible.value = true;
+};
 const plans = ref([]);
 
 const createPlan = () => {
@@ -96,7 +105,6 @@ onMounted(() => {
     axios.get('/api/plans').then(response => {
         plans.value = response.data;
     });
-    createPlan();
 });
 
 </script>

@@ -18,8 +18,8 @@ class ClientFactory extends Factory
             'Full_name' => $this->faker->name,
             'date_of_birth' => $this->faker->date(),
             'address' => $this->faker->address,
-            'id_card_picture' => 'clients/BNpRxWNFV1lZbrnNEaCy0gjXxwYvW0CWwkwdBs0Q.png', // Fixed path
-            'client_picture' => 'clients/euA0Yn9w4FIUkQd99J99E0lOMHbPL0j6VKLMF0K3.png', // Fixed path
+            'id_card_picture' => 'clients/wQIcjisfcntuHbRNslzTxgdx0WkROzWwcLUxIUbb.jpg', // Fixed path
+            'client_picture' => 'clients/dUjO31EUclPiWN85rlYhEMDDxdr5UT56gB5JwUxT.jpg', // Fixed path
             'id_card_number' => $this->faker->unique()->numerify('##########'),
             'email' => $this->faker->unique()->safeEmail,
             'phone' => $this->faker->phoneNumber,

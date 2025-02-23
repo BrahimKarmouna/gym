@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Exécuter la mise à jour des statuts des clients chaque jour à minuit
-        $schedule->command('clients:update-status')->everyMinute();
+        $schedule->command('clients:update-status')->everySecond();
     }
 
     /**

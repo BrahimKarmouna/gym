@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
@@ -35,7 +34,6 @@ class Payment extends Model
             }
         });
     }
-
     public function client()
     {
         return $this->belongsTo(Client::class);

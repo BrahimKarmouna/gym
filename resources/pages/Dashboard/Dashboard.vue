@@ -1,11 +1,8 @@
 <template>
-    <FormModal v-model:visible="addClientModal" />
+
     <ShowModal v-model:visible="ShowClient" :clients="clients"  />
-    <q-btn @click="openModal">
-        <q-icon name="add" />
-        <q-tooltip>Add Client</q-tooltip>
-    </q-btn>
-    <div class="container items-center px-4 py-8 m-auto sm:mt-10 md:">
+  
+    <div class="container items-center px-4 py-8 m-auto  md:">
         <div
             class="flex flex-wrap pb-3 bg-white divide-y rounded-sm shadow-lg xl:divide-x xl:divide-y-0"
         >
@@ -58,11 +55,11 @@
                     >
                         <div class="flex mr-4">
                             <span
-                                class="items-center px-4 py-4 m-auto bg-red-200 rounded-full hover:bg-red-300"
+                                class="items-center px-4 py-4 m-auto bg-grey100 rounded-full hover:bg-grey-100"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="items-center w-8 h-8 m-auto text-red-500 hover:text-red-600"
+                                    class="items-center w-8 h-8 m-auto text-white hover:text-grey-100"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -321,97 +318,173 @@
             </div>
         </div>
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            
-            <th scope="col" class="p-4">
-              <div class="flex items-center">
-                <input
-                  id="checkbox-all-search"
-                  type="checkbox"
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label for="checkbox-all-search" class="sr-only">checkbox</label>
-              </div>
-            </th>
-          <th scope="col" class="px-6 py-3">id</th>
-            <th scope="col" class="px-6 py-3">Name</th>
-            <th scope="col" class="px-6 py-3">Phone</th>
-            <th scope="col" class="px-6 py-3">Asserance</th>
-            <th scope="col" class="px-6 py-3">Payment</th>
-            <th scope="col" class="px-6 py-3">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="client in clients"
-            :key="client.id"
-            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
-          >
-       
-            <td class="w-4 p-4">
-              <div class="flex items-center">
-                <input
-                  id="checkbox-table-search-1"
-                  type="checkbox"
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-              </div>
-            </td>  
-             <td class="px-6 py-4" >
-           #{{ client.id }}
-          </td>
-         <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-  <img
-    :src="'storage/' + client.client_picture"
-    alt="Client Image"
-    class="w-12 h-12 rounded-full border border-gray-300 shadow-sm object-cover"
-  />
-  <div class="ps-3">
-    <div class="text-base font-semibold"><button @click="showClient">{{ client.Full_name }}</button> </div>
-    <div class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ client.name }}</div>
-    <div class="font-normal text-gray-500">{{ client.email }}</div>
-  </div>
-</th>
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th
+                        scope="col"
+                        class="p-4"
+                    >
+                        <div class="flex items-center">
+                            <input
+                                id="checkbox-all-search"
+                                type="checkbox"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            />
+                            <label
+                                for="checkbox-all-search"
+                                class="sr-only"
+                            >checkbox</label>
+                        </div>
+                    </th>
+                    <th
+                        scope="col"
+                        class="px-6 py-3"
+                    >id</th>
+                    <th
+                        scope="col"
+                        class="px-6 py-3"
+                    >Name</th>
+
+                    <th
+                        scope="col"
+                        class="px-6 py-3"
+                    >Phone</th>
+                    <th
+                        scope="col"
+                        class="px-6 py-3"
+                    >Asserance</th>
+                    <th
+                        scope="col"
+                        class="px-6 py-3"
+                    >Payment</th>
+                    <th
+                        scope="col"
+                        class="px-6 py-3"
+                    >Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    v-for="client in clients"
+                    :key="client.id"
+                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
+                >
+                    <td class="w-4 p-4">
+                        <div class="flex items-center">
+                            <input
+                                id="checkbox-table-search-1"
+                                type="checkbox"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            />
+                            <label
+                                for="checkbox-table-search-1"
+                                class="sr-only"
+                            >checkbox</label>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">#{{ client.id }}</td>
+                    <th
+                        scope="row"
+                        class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                        <img
+                            :src="'storage/' + client.client_picture"
+                            alt="Client Image"
+                            class="w-12 h-12 rounded-full border border-gray-300 shadow-sm object-cover"
+                        />
+                        <div class="ps-3">
+                            <div class="text-base font-semibold">
+                                <button @click="showClient(client)">
+                                    {{ client.Full_name }}
+                                </button>
+                            </div>
+                            <div class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                {{ client.name }}
+                            </div>
+                            <div class="font-normal text-gray-500">
+                                {{ client.email }}
+                            </div>
+                        </div>
+                    </th>
+
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">
+                            {{ client.phone }}
+                            <div class="mb-1">
+                                <q-icon name="phone_iphone"></q-icon>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div
+                            class="flex items-center"
+                            v-if="client.is_assured"
+                        >
+                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>
+                            Assuré
+                        </div>
+                        <div
+                            class="flex items-center"
+                            v-else
+                        >
+                            <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div>
+                            Non assuré
+                        </div>
 
 
-<td class="px-6 py-4">
-              <div class="flex items-center">
-                {{ client.phone }} <div class="mb-1 "> <q-icon name="phone_iphone"></q-icon></div>
-              </div>
-            </td>
-            <td class="px-6 py-4">
-              <div class="flex items-center">
-                <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>  assure
-              </div>
-            </td>
-            <td class="px-6 py-4">
-              <div class="flex items-center">
-                <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div> non payee
-              </div>
-            </td>
-            <td class="px-6 py-4">
-              <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+
+                    </td>
+                    <td class="px-6 py-4">
+
+                        <div
+                            v-if="client.is_payed"
+                            class="flex items-center
+
+
+                       "
+                        >
+                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2">
+                            </div>
+                            payee
+                        </div>
+
+                        <div
+                            class="flex items-center"
+                            v-else
+                        >
+                            <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div>
+                            non payee
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 relative">  <!-- Add relative positioning to the <td> -->
+<!-- Three-dot (Ellipsis) Action Button -->
+<q-btn-dropdown dense unelevated  >
+    <q-list class="" >
+        <q-item clickable v-close-popup>
+            <q-item-section>
+                <q-item-label>Create Payment <q-icon name="attach_money" size ="sm" class="ms-1 " ></q-icon> </q-item-label>
+            </q-item-section>
+        </q-item>
+        <q-item clickable v-close-popup>
+            <q-item-section>
+                <q-item-label>Create Inssurance  <q-icon name="shield" size ="sm" class="ms-1 " ></q-icon></q-item-label>
+            </q-item-section>
+        </q-item>
+    </q-list>
+</q-btn-dropdown>
+</td>
+
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 <script setup>
 import axios from "axios";
 import { ref } from "vue";
-// import Picture from '../../storage/app/public/clients/K9Cp6FiP51kmta9y6L0RocnXCXQHyVCG19AW9mcq.png';
-import FormModal from "../components/FormModal.vue";
-import ShowModal from "../components/ShowModal.vue";
 
 const clients = ref([]);
-const addClientModal = ref(false);
-const ShowClient= ref(false);
-function openModal() {
-    addClientModal.value = true;
-}
+const ShowClient = ref(false);
 function showClient() {
     ShowClient.value = true;
 }

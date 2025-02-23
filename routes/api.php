@@ -24,6 +24,7 @@ Route::get('/payments', PaymentController::class . '@index');
 Route::get('/payments/{id}', PaymentController::class . '@show');
 Route::post('/payments', PaymentController::class . '@store');
 Route::put('/payments/{id}', PaymentController::class . '@update');
+Route::delete('/payments/{id}', PaymentController::class . '@destroy');
 
 // plans
 
@@ -32,3 +33,12 @@ Route::get('/plans/{id}', [App\Http\Controllers\PlanController::class, 'show']);
 Route::post('/plans', [App\Http\Controllers\PlanController::class, 'store']);
 Route::put('/plans/{id}', [App\Http\Controllers\PlanController::class, 'update']);
 Route::delete('/plans/{id}', [App\Http\Controllers\PlanController::class, 'destroy']);
+
+
+
+// Route::middleware(['auth:sanctum'])->group(function () {
+//     Route::get('/dashboard', [UserController::class, 'dashboard'])
+//         ->middleware('can:view-dashboard');
+
+//     Route::get('/users', [UserController::class, 'index'])
+//         ->middleware('can:manage-users');

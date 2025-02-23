@@ -13,3 +13,7 @@
         @vite('resources/js/app.js')
     </body>
 </html>
+<script>
+    window.isAuthenticated = @json(auth()->check());
+  </script>
+  
