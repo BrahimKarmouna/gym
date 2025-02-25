@@ -18,8 +18,19 @@
 
                 <q-card-section class="q-pt-none">
                     <div class="row q-col-gutter-md">
-                        <!-- Client Selection -->
+                        <!-- Client (Preselected and Disabled if Provided) -->
+                        <q-input
+                            v-if="client"
+                            :model-value="payment.client.Full_name"
+                            label="Client"
+                            filled
+                            class="col-6 q-mb-md"
+                            disable
+                        />
+
+                        <!-- Client Selection Dropdown (Only If No Client Is Provided) -->
                         <q-select
+                            v-else
                             v-model="payment.client"
                             :options="clients"
                             label="Select Client"
@@ -27,6 +38,8 @@
                             class="col-6 q-mb-md"
                             option-value="id"
                             option-label="Full_name"
+                            use-input
+                            @filter="searchClients"
                         />
 
                         <!-- Plan Selection -->
@@ -73,34 +86,65 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import axios from "axios";
+
+// Props
+const props = defineProps({
+    client: Object // Optional: Preselected client
+});
 
 // Visibility control
 const visible = defineModel("visible", { default: false, type: Boolean });
 
 // Payment form model
 const payment = ref({
-    client: null,  // Client ID will be selected here
-    plan: null,    // Plan ID will be selected here
-    payment_date: "2025-02-21"  // Default payment date
+    client_id: props.client || null,  // Use client from props if available
+    plan_id: null,
+    payment_date: new Date().toISOString().substr(0, 10)
 });
 
 // Clients and plans data
 const clients = ref([]);
 const plans = ref([]);
+// const search = ref("");
 
-// Fetch clients and plans data on component mount
-onMounted(() => {
-    // Fetch clients
-    axios.get("/api/clients").then((response) => {
+
+// FILTER CLIENTS IN FRONTEND USING JS
+
+// const filterClients = () => {
+//     clients.value = clients.filter( (client) => {
+//         if (!search.value) return;
+//         if (client.Full_name.includes(search.value)) {
+//             return client;
+//         }
+//     })
+// }
+
+const searchClients = (value, update, abort) => {
+    update(() => fetchClients(value));
+}
+
+const fetchClients = async (search = null) => {
+    let url;
+    if (!search) url = '/api/clients/fetch';
+    else url = `/api/clients/fetch?search=${search}`;
+    await axios.get(url).then((response) => {
         clients.value = response.data;
     });
+};
 
-    // Fetch plans
+// Fetch data on mount
+onMounted(() => {
+    fetchClients();
     axios.get("/api/plans").then((response) => {
         plans.value = response.data;
     });
+});
+
+// Watch for changes in client prop and update payment.client
+watch(() => props.client, (newClient) => {
+    payment.value.client = newClient;
 });
 
 // Close modal and reset form state
@@ -112,20 +156,31 @@ const closeModal = () => {
 // Reset the payment form
 const resetPayment = () => {
     payment.value = {
-        client: null,
+        client: props.client || null, // Reset to selected client
         plan: null,
-        payment_date: new Date().toISOString().substr(0, 10), // Reset to today's date
+        payment_date: new Date().toISOString().substr(0, 10),
     };
 };
 
 // Save payment to the backend
 const savePayment = () => {
-    // Sending the payment data (with selected client_id, plan_id, and payment_date)
-    axios
-        .post("/api/payments", payment.value)
+    if (!payment.value.client || !payment.value.plan) {
+        console.error("Client and Plan are required!");
+        return;
+    }
+
+    // Prepare payload
+    const paymentData = {
+        client_id: payment.value.client.id,
+        plan_id: payment.value.plan.id,
+        payment_date: payment.value.payment_date
+    };
+
+    // API call
+    axios.post("/api/payments", paymentData)
         .then(() => {
             console.log("Payment saved successfully.");
-            closeModal();  // Close the modal after saving
+            closeModal();
         })
         .catch((error) => {
             console.error("Error saving payment:", error);

@@ -41,14 +41,26 @@ const routes = [
         meta: { requiresAuth: true }, // This page needs authentication
     },
     {
+        path: "/insurance",
+        name: "Insurance",
+        component: () => import("../pages/Insurance/index.vue"),
+        meta: { requiresAuth: true }, // This page needs authentication
+    },
+    {
         path: "/login",
         name: "Login",
         component: Login,
     },
     {
-        path:"/profile",
-        name:"Profile",
-        component:Profile,
+        path: "/profile",
+        name: "Profile",
+        component: Profile,
+        meta: { requiresAuth: true },
+    },
+    {
+        path: "/insurance_plans",
+        name: "InsurancePlans",
+        component: () => import("../pages/insurance_plans/index.vue"),
         meta: { requiresAuth: true },
     },
 ];

@@ -9,10 +9,15 @@ class InsurancePlan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'price'];
+    protected $fillable = ['name', 'price', 'duration'];
 
     public function members()
     {
         return $this->hasMany(Member::class);
     }
+    public function client()
+    {
+        return $this->belongsTo(Client::class); // InsurancePlan belongs to Client
+    }
+
 }

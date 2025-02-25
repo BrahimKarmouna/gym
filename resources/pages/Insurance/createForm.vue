@@ -1,0 +1,151 @@
+<template>
+    <div class="q-pa-md q-gutter-sm">
+        <q-dialog
+            v-model="visible"
+            persistent
+        >
+            <q-card style="min-width: 600px; height: auto;">
+                <q-card-section class="row justify-between items-center">
+                    <div class="text-h6">Add Insurance</div>
+                    <q-btn
+                        flat
+                        round
+                        dense
+                        icon="close"
+                        @click="closeModal"
+                    />
+                </q-card-section>
+
+                <q-card-section class="q-pt-none">
+                    <div class="row q-col-gutter-md">
+                        <!-- Client Selection -->
+                        <q-select
+                            v-model="insurance.client"
+                            :options="clients"
+                            label="Select Client"
+                            filled
+                            class="col-6 q-mb-md"
+                            option-value="id"
+                            option-label="Full_name"
+                        />
+
+                        <!-- Insurance Plan Selection -->
+                        <q-select
+                            v-model="insurance.plan"
+                            :options="plans"
+                            label="Select Insurance Plan"
+                            filled
+                            class="col-6 q-mb-md"
+                            option-value="id"
+                            option-label="name"
+                        />
+
+                        <!-- Payment Date -->
+                        <q-input
+                            dense
+                            v-model="insurance.payment_date"
+                            label="Payment Date"
+                            type="date"
+                            filled
+                            class="col-6 q-mb-md"
+                        />
+
+                        <!-- Expiry Date -->
+                        <q-input
+                            dense
+                            v-model="insurance.expiry_date"
+                            label="Insurance Expiry Date"
+                            type="date"
+                            filled
+                            class="col-6 q-mb-md"
+                        />
+                    </div>
+                </q-card-section>
+
+                <q-card-actions
+                    align="right"
+                    class="text-primary"
+                >
+                    <q-btn
+                        flat
+                        label="Cancel"
+                        @click="closeModal"
+                    />
+                    <q-btn
+                        flat
+                        label="Save Insurance"
+                        @click="saveInsurance"
+                    />
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
+    </div>
+</template>
+<script setup>
+import { ref, onMounted } from "vue";
+import axios from "axios";
+
+// Visibility control
+const visible = defineModel("visible", { default: false, type: Boolean });
+
+// Insurance form model
+const insurance = ref({
+    client: null,   // Client ID will be selected here
+    plan: null,     // Plan ID will be selected here
+    payment_date: "2025-02-21", // Default payment date
+    expiry_date: "2025-12-31", // Default expiry date (you can change as needed)
+});
+
+// Clients and plans data
+const clients = ref([]);
+const plans = ref([]);
+
+// Fetch clients and plans data on component mount
+onMounted(() => {
+    // Fetch clients
+    axios.get("/api/clients").then((response) => {
+        clients.value = response.data;
+    });
+
+    // Fetch insurance plans
+    axios.get("/api/insurance-plans").then((response) => {
+        plans.value = response.data;
+    });
+});
+
+// Close modal and reset form state
+const closeModal = () => {
+    visible.value = false;
+    resetInsurance();
+};
+
+// Reset the insurance form
+const resetInsurance = () => {
+    insurance.value = {
+        client: null,
+        plan: null,
+        payment_date: new Date().toISOString().substr(0, 10),
+        expiry_date: new Date().toISOString().substr(0, 10),
+    };
+};
+
+// Save insurance to the backend
+const saveInsurance = () => {
+    // Prepare the payload by sending only the required IDs and dates
+    const insuranceData = {
+        client_id: insurance.value.client.id,
+        insurance_plan_id: insurance.value.plan.id,
+        payment_date: insurance.value.payment_date,
+        expiry_date: insurance.value.expiry_date,
+    };
+    axios
+        .post("/api/insurance", insuranceData)
+        .then(() => {
+            console.log("Insurance saved successfully.");
+            closeModal();
+        })
+        .catch((error) => {
+            console.error("Error saving insurance:", error);
+        });
+};
+</script>

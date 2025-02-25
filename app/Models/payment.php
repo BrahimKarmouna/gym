@@ -11,6 +11,17 @@ class Payment extends Model
 
     protected $fillable = ['client_id', 'plan_id', 'payment_date'];
 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'client_id' => 'required|exists:clients,id',
+            'plan_id' => 'required|exists:plans,id',
+            'payment_date' => 'required|date',
+        ]);
+
+        $payment = Payment::create($request->all());
+        return response()->json($payment, 201);
+    }
     // When a payment is created, update the client's subscription expiration date
     protected static function boot()
     {

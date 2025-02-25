@@ -1,5 +1,5 @@
 <template>
-<CreateForm v-model:visible="is_visible" />
+    <CreateForm v-model:visible="is_visible" />
     <UpdateModal
         v-model:visible="updateModalClient"
         :clients="clients"
@@ -10,18 +10,19 @@
         :clients="clients"
         :id="selectedClientid?.id"
     />
-  
+
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    
+
         <div
             class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
-            <div >
-                <q-btn 
-                class="mr-7"
-                @click="openModal">
-        <q-icon name="add" />
-        <q-tooltip>Add Client</q-tooltip>
-    </q-btn>
+            <div>
+                <q-btn
+                    class="mr-7"
+                    @click="openModal"
+                >
+                    <q-icon name="add" />
+                    <q-tooltip>Add Client</q-tooltip>
+                </q-btn>
                 <button
                     id="dropdownActionButton"
                     data-dropdown-toggle="dropdownAction"
@@ -261,56 +262,68 @@
 
                     </td> -->
 
-                    <td class="px-6 py-4 relative">  <!-- Add relative positioning to the <td> -->
-                        <q-btn-dropdown dense unelevated  >
+                    <td class="px-6 py-4 relative"> <!-- Add relative positioning to the <td> -->
+                        <q-btn-dropdown
+                            dense
+                            unelevated
+                        >
 
-      <q-list>
-        <q-item clickable v-close-popup @click="onItemClick">
-                <q-btn
-                            icon="edit"
-                            color="blue"
-                            width="100%"
-                            background-color="white"
-                            @click="updateClient(client)"
-                           
-                        ></q-btn>
-        </q-item>
+                            <q-list>
+                                <q-item
+                                    clickable
+                                    v-close-popup
+                                    @click="onItemClick"
+                                >
+                                    <q-btn
+                                        icon="edit"
+                                        color="blue"
+                                        width="100%"
+                                        background-color="white"
+                                        @click="updateClient(client)"
+                                    ></q-btn>
+                                </q-item>
 
-        <q-item clickable v-close-popup @click="onItemClick">
-          <q-item-section>
-            <q-item-label>
-              <q-btn
-                            icon="delete"
-                            color="red"
-                            width="100%"
-                            background-color="white"
-                            @click="deleteClient(client.id)"
-                           
-                        ></q-btn>
-            </q-item-label>
-          </q-item-section>
-        </q-item>
+                                <q-item
+                                    clickable
+                                    v-close-popup
+                                    @click="onItemClick"
+                                >
+                                    <q-item-section>
+                                        <q-item-label>
+                                            <q-btn
+                                                icon="delete"
+                                                color="red"
+                                                width="100%"
+                                                background-color="white"
+                                                @click="deleteClient(client.id)"
+                                            ></q-btn>
+                                        </q-item-label>
+                                    </q-item-section>
+                                </q-item>
 
-        <q-item clickable v-close-popup @click="onItemClick">
-          <q-item-section>
-            <q-item-label>
-                <q-btn
-                            icon="visibility"
-                            color="blue"
-                            width="100%"
-                            background-color="white"
-                            @click="showClient(client)"
-                           
-                        ></q-btn>
+                                <q-item
+                                    clickable
+                                    v-close-popup
+                                    @click="onItemClick"
+                                >
+                                    <q-item-section>
+                                        <q-item-label>
+                                            <q-btn
+                                                icon="visibility"
+                                                color="blue"
+                                                width="100%"
+                                                background-color="white"
+                                                @click="showClient(client)"
+                                            ></q-btn>
 
 
-            </q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-btn-dropdown>
+                                        </q-item-label>
+                                    </q-item-section>
+                                </q-item>
+                            </q-list>
+                        </q-btn-dropdown>
 
-</td>
+                    </td>
                 </tr>
             </tbody>
         </table>

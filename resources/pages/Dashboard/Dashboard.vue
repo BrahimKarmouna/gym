@@ -1,20 +1,17 @@
 <template>
 
-    <ShowModal v-model:visible="ShowClient" :clients="clients"  />
-  
+    <ShowModal
+        v-model:visible="ShowClient"
+        :clients="clients"
+    />
+
     <div class="container items-center px-4 py-8 m-auto  md:">
-        <div
-            class="flex flex-wrap pb-3 bg-white divide-y rounded-sm shadow-lg xl:divide-x xl:divide-y-0"
-        >
+        <div class="flex flex-wrap pb-3 bg-white divide-y rounded-sm shadow-lg xl:divide-x xl:divide-y-0">
             <div class="w-full p-2 xl:w-1/4 sm:w-1/2">
                 <div class="flex flex-col">
-                    <div
-                        class="flex flex-row items-center justify-between px-4 py-4"
-                    >
+                    <div class="flex flex-row items-center justify-between px-4 py-4">
                         <div class="flex mr-4">
-                            <span
-                                class="items-center px-4 py-4 m-auto bg-blue-200 rounded-full hover:bg-blue-300"
-                            >
+                            <span class="items-center px-4 py-4 m-auto bg-blue-200 rounded-full hover:bg-blue-300">
                             </span>
                         </div>
                         <div class="flex-1 pl-1">
@@ -27,21 +24,15 @@
                         </div>
                     </div>
                     <div class="px-4 pt-px">
-                        <div
-                            class="w-full h-2 bg-gray-200 rounded-md hover:bg-gray-300"
-                        >
+                        <div class="w-full h-2 bg-gray-200 rounded-md hover:bg-gray-300">
                             <div
                                 class="h-2 bg-blue-500 rounded-md hover:bg-blue-600"
                                 style="width: 83%"
                             ></div>
                         </div>
-                        <div
-                            class="flex flex-row items-center justify-between w-full py-px text-base text-gray-400"
-                        >
+                        <div class="flex flex-row items-center justify-between w-full py-px text-base text-gray-400">
                             <p class="flex">change</p>
-                            <div
-                                class="flex items-center justify-between space-x-2"
-                            >
+                            <div class="flex items-center justify-between space-x-2">
                                 <p>83%</p>
                             </div>
                         </div>
@@ -50,13 +41,9 @@
             </div>
             <div class="w-full p-2 xl:w-1/4 sm:w-1/2">
                 <div class="flex flex-col">
-                    <div
-                        class="flex flex-row items-center justify-between px-4 py-4"
-                    >
+                    <div class="flex flex-row items-center justify-between px-4 py-4">
                         <div class="flex mr-4">
-                            <span
-                                class="items-center px-4 py-4 m-auto bg-grey100 rounded-full hover:bg-grey-100"
-                            >
+                            <span class="items-center px-4 py-4 m-auto bg-grey100 rounded-full hover:bg-grey-100">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     class="items-center w-8 h-8 m-auto text-white hover:text-grey-100"
@@ -83,21 +70,15 @@
                         </div>
                     </div>
                     <div class="px-4 pt-px">
-                        <div
-                            class="w-full h-2 bg-gray-200 rounded-md hover:bg-gray-300"
-                        >
+                        <div class="w-full h-2 bg-gray-200 rounded-md hover:bg-gray-300">
                             <div
                                 class="h-2 bg-red-500 rounded-md hover:bg-red-600"
                                 style="width: 78%"
                             ></div>
                         </div>
-                        <div
-                            class="flex flex-row items-center justify-between w-full py-px text-base text-gray-400"
-                        >
+                        <div class="flex flex-row items-center justify-between w-full py-px text-base text-gray-400">
                             <p class="flex">change</p>
-                            <div
-                                class="flex items-center justify-between space-x-2"
-                            >
+                            <div class="flex items-center justify-between space-x-2">
                                 <p>78%</p>
                             </div>
                         </div>
@@ -106,13 +87,9 @@
             </div>
             <div class="w-full p-2 xl:w-1/4 sm:w-1/2">
                 <div class="flex flex-col">
-                    <div
-                        class="flex flex-row items-center justify-between px-4 py-4"
-                    >
+                    <div class="flex flex-row items-center justify-between px-4 py-4">
                         <div class="flex mr-4">
-                            <span
-                                class="items-center px-4 py-4 m-auto bg-yellow-200 rounded-full hover:bg-yellow-300"
-                            >
+                            <span class="items-center px-4 py-4 m-auto bg-yellow-200 rounded-full hover:bg-yellow-300">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     class="items-center w-8 h-8 m-auto text-yellow-500 hover:text-yellow-600"
@@ -139,21 +116,15 @@
                         </div>
                     </div>
                     <div class="px-4 pt-px">
-                        <div
-                            class="w-full h-2 bg-gray-200 rounded-md hover:bg-gray-300"
-                        >
+                        <div class="w-full h-2 bg-gray-200 rounded-md hover:bg-gray-300">
                             <div
                                 class="h-2 bg-yellow-500 rounded-md hover:bg-yellow-600"
                                 style="width: 86%"
                             ></div>
                         </div>
-                        <div
-                            class="flex flex-row items-center justify-between w-full py-px text-base text-gray-400"
-                        >
+                        <div class="flex flex-row items-center justify-between w-full py-px text-base text-gray-400">
                             <p class="flex">change</p>
-                            <div
-                                class="flex items-center justify-between space-x-2"
-                            >
+                            <div class="flex items-center justify-between space-x-2">
                                 <p>86%</p>
                             </div>
                         </div>
@@ -162,13 +133,9 @@
             </div>
             <div class="w-full p-2 xl:w-1/4 sm:w-1/2">
                 <div class="flex flex-col">
-                    <div
-                        class="flex flex-row items-center justify-between px-4 py-4"
-                    >
+                    <div class="flex flex-row items-center justify-between px-4 py-4">
                         <div class="flex mr-4">
-                            <span
-                                class="items-center px-4 py-4 m-auto bg-green-200 rounded-full hover:bg-green-300"
-                            >
+                            <span class="items-center px-4 py-4 m-auto bg-green-200 rounded-full hover:bg-green-300">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     class="items-center w-8 h-8 m-auto text-green-500 hover:text-green-600"
@@ -195,21 +162,15 @@
                         </div>
                     </div>
                     <div class="px-4 pt-px">
-                        <div
-                            class="w-full h-2 bg-gray-200 rounded-md hover:bg-gray-300"
-                        >
+                        <div class="w-full h-2 bg-gray-200 rounded-md hover:bg-gray-300">
                             <div
                                 class="h-2 bg-green-500 rounded-md hover:bg-green-600"
                                 style="width: 79%"
                             ></div>
                         </div>
-                        <div
-                            class="flex flex-row items-center justify-between w-full py-px text-base text-gray-400"
-                        >
+                        <div class="flex flex-row items-center justify-between w-full py-px text-base text-gray-400">
                             <p class="flex">change</p>
-                            <div
-                                class="flex items-center justify-between space-x-2"
-                            >
+                            <div class="flex items-center justify-between space-x-2">
                                 <p>79%</p>
                             </div>
                         </div>
@@ -221,17 +182,17 @@
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <div
-            class="ml-40 flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900"
-        >
+            class="ml-40 flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
             <div class="ml-40">
- 
-             
+
+
             </div>
-            <label for="table-search" class="sr-only">Search</label>
+            <label
+                for="table-search"
+                class="sr-only"
+            >Search</label>
             <div class="relative">
-                <div
-                    class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none"
-                >
+                <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
                     <svg
                         class="w-4 h-4 text-gray-500 dark:text-gray-400"
                         aria-hidden="true"
@@ -278,12 +239,11 @@
                     <th
                         scope="col"
                         class="px-6 py-3"
-                    >id</th>
+                    >ID</th>
                     <th
                         scope="col"
                         class="px-6 py-3"
                     >Name</th>
-
                     <th
                         scope="col"
                         class="px-6 py-3"
@@ -291,7 +251,7 @@
                     <th
                         scope="col"
                         class="px-6 py-3"
-                    >Asserance</th>
+                    >Assurance</th>
                     <th
                         scope="col"
                         class="px-6 py-3"
@@ -369,59 +329,101 @@
                             <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div>
                             Non assuré
                         </div>
-
-
-
                     </td>
                     <td class="px-6 py-4">
-
                         <div
                             v-if="client.is_payed"
-                            class="flex items-center
-
-
-                       "
+                            class="flex items-center"
                         >
-                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2">
-                            </div>
-                            payee
+                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>
+                            Payé
                         </div>
-
                         <div
                             class="flex items-center"
                             v-else
                         >
                             <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div>
-                            non payee
+                            Non payé
                         </div>
                     </td>
-                    <td class="px-6 py-4 relative">  <!-- Add relative positioning to the <td> -->
-<!-- Three-dot (Ellipsis) Action Button -->
-<q-btn-dropdown dense unelevated  >
-    <q-list class="" >
-        <q-item clickable v-close-popup>
-            <q-item-section>
-                <q-item-label>Create Payment <q-icon name="attach_money" size ="sm" class="ms-1 " ></q-icon> </q-item-label>
-            </q-item-section>
-        </q-item>
-        <q-item clickable v-close-popup>
-            <q-item-section>
-                <q-item-label>Create Inssurance  <q-icon name="shield" size ="sm" class="ms-1 " ></q-icon></q-item-label>
-            </q-item-section>
-        </q-item>
-    </q-list>
-</q-btn-dropdown>
-</td>
-
+                    <td class="px-6 py-4 relative">
+                        <!-- Three-dot (Ellipsis) Action Button -->
+                        <q-btn-dropdown
+                            dense
+                            unelevated
+                        >
+                            <q-list>
+                                <q-item
+                                    clickable
+                                    v-close-popup
+                                    @click="openInsuranceModal(client)"
+                                >
+                                    <q-item-section>
+                                        <q-item-label>
+                                            Create Insurance
+                                            <q-icon
+                                                name="shield"
+                                                size="sm"
+                                                class="ms-1"
+                                            ></q-icon>
+                                        </q-item-label>
+                                    </q-item-section>
+                                </q-item>
+                                <q-item
+                                    clickable
+                                    v-close-popup
+                                    @click="openPaymentModal(client)"
+                                >
+                                    <q-item-section>
+                                        <q-item-label>
+                                            Create Payment
+                                            <q-icon
+                                                name="attach_money"
+                                                size="sm"
+                                                class="ms-1"
+                                            ></q-icon>
+                                        </q-item-label>
+                                    </q-item-section>
+                                </q-item>
+                            </q-list>
+                        </q-btn-dropdown>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <!-- Insurance Modal -->
+    <InsuranceForm
+        v-model:visible="isInsuranceModalVisible"
+        :client="selectedClient"
+    />
+
+    <!-- Payment Modal -->
+    <PaymentForm
+        v-model:visible="isPaymentModalVisible"
+        :client="selectedClient"
+    />
 </template>
 <script setup>
 import axios from "axios";
 import { ref } from "vue";
+import PaymentForm from '../Payments/createForm.vue';
+import InsuranceForm from '../Insurance/createForm.vue';
 
+const isInsuranceModalVisible = ref(false);
+const isPaymentModalVisible = ref(false);
+const selectedClient = ref(null);
+// Open the Insurance Modal
+const openInsuranceModal = (client) => {
+    selectedClient.value = client;
+    isInsuranceModalVisible.value = true;
+};
+
+// Open the Payment Modal
+const openPaymentModal = (client) => {
+    selectedClient.value = client;
+    isPaymentModalVisible.value = true;
+};
 const clients = ref([]);
 const ShowClient = ref(false);
 function showClient() {

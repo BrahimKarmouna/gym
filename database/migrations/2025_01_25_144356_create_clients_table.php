@@ -5,8 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Client;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -23,8 +22,8 @@ return new class extends Migration
             $table->string('id_card_number')->nullable();
             $table->string('email');
             $table->string('phone')->nullable();
-            $table->boolean('is_assured')->default(false);
-            $table->boolean('is_payed')->default(false);
+            // $table->boolean('is_assured')->default(false);
+            // $table->boolean('is_payed')->default(false);
             $table->date('subscription_expired_date')->default(now()->toDateString());
             $table->date('assurance_expired_date')->default(now()->toDateString());
 

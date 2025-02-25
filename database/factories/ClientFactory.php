@@ -23,8 +23,8 @@ class ClientFactory extends Factory
             'id_card_number' => $this->faker->unique()->numerify('##########'),
             'email' => $this->faker->unique()->safeEmail,
             'phone' => $this->faker->phoneNumber,
-            'is_assured' => 0,
-            'is_payed' => 0,
+            // 'is_assured' => 0,
+            // 'is_payed' => 0,
             'subscription_expired_date' => now(), // Subscription expires in 6 months
             'assurance_expired_date' => now(), // Assurance expires in 1 year
         ];
