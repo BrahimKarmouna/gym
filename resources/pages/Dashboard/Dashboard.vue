@@ -4,7 +4,6 @@
         v-model:visible="ShowClient"
         :clients="clients"
     />
-
     <div class="container items-center px-4 py-8 m-auto  md:">
         <div class="flex flex-wrap pb-3 bg-white divide-y rounded-sm shadow-lg xl:divide-x xl:divide-y-0">
             <div class="w-full p-2 xl:w-1/4 sm:w-1/2">
@@ -396,17 +395,19 @@
     <InsuranceForm
         v-model:visible="isInsuranceModalVisible"
         :client="selectedClient"
+        @insuranceAdded="refreshPayments"
     />
 
     <!-- Payment Modal -->
     <PaymentForm
         v-model:visible="isPaymentModalVisible"
         :client="selectedClient"
+        @new_payment="refreshPayments"
     />
 </template>
 <script setup>
 import axios from "axios";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import PaymentForm from '../Payments/createForm.vue';
 import InsuranceForm from '../Insurance/createForm.vue';
 
@@ -417,6 +418,10 @@ const selectedClient = ref(null);
 const openInsuranceModal = (client) => {
     selectedClient.value = client;
     isInsuranceModalVisible.value = true;
+};
+
+const refreshPayments = () => {
+    fetchClients();
 };
 
 // Open the Payment Modal
@@ -430,21 +435,25 @@ function showClient() {
     ShowClient.value = true;
 }
 console.log(clients);
+const fetchClients = () => {
+    axios
+        .get("/api/clients")
 
-//axios get clients
-axios
-    .get("/api/clients")
+        .then(function (response) {
+            clients.value = response.data;
+            // handle success
+            console.log(response);
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+        .then(function () {
+            // always executed
+        });
+};
+onMounted(() => {
+    fetchClients();
+});
 
-    .then(function (response) {
-        clients.value = response.data;
-        // handle success
-        console.log(response);
-    })
-    .catch(function (error) {
-        // handle error
-        console.log(error);
-    })
-    .then(function () {
-        // always executed
-    });
 </script>

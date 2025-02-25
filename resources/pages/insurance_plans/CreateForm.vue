@@ -69,8 +69,11 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+import { useQuasar } from 'quasar';
+const $q = useQuasar();
 
-// Visibility control
+
+
 const visible = defineModel("visible", { default: false, type: Boolean });
 
 // Insurance Plan form model
@@ -90,8 +93,8 @@ const closeModal = () => {
 const resetInsurancePlan = () => {
     insurancePlan.value = {
         name: "",
-        price: 0,
-        duration: 1,
+        price: null,
+        duration: null,
     };
 };
 
@@ -100,8 +103,18 @@ const saveInsurancePlan = () => {
     axios
         .post("/api/insurance-plans", insurancePlan.value)
         .then(() => {
+            $q.notify({
+                type: "positive",
+                message: "Success",
+                caption: "New plan saved successfully.",
+                position: "bottom-right",
+                timeout: 4000,
+                progress: true,
+
+            });
+            closeModal();
             console.log("Insurance Plan saved successfully.");
-            closeModal(); // Close modal after saving
+            // Close modal after saving
         })
         .catch((error) => {
             console.error("Error saving insurance plan:", error);

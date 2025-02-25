@@ -87,7 +87,11 @@
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
+import { defineEmits, defineProps, defineModel } from "vue";
 import axios from "axios";
+const emit = defineEmits(["new_payment"]);
+import { useQuasar } from 'quasar';
+const $q = useQuasar();
 
 // Props
 const props = defineProps({
@@ -176,14 +180,27 @@ const savePayment = () => {
         payment_date: payment.value.payment_date
     };
 
-    // API call
     axios.post("/api/payments", paymentData)
         .then(() => {
             console.log("Payment saved successfully.");
+            $q.notify({
+                type: "positive",
+                message: "Success",
+                caption: "Payment saved successfully.",
+                position: "bottom-right",
+                timeout: 4000,
+                progress: true,
+
+            });
             closeModal();
+            emit("new_payment");
         })
         .catch((error) => {
             console.error("Error saving payment:", error);
         });
 };
+
+// API call
+
+
 </script>

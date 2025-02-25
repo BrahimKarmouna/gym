@@ -84,6 +84,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import { useQuasar } from 'quasar';
+import { defineEmits, defineModel } from "vue";
+const $q = useQuasar();
+const emit = defineEmits(["assuranceAdded"]);
 
 // Visibility control
 const visible = defineModel("visible", { default: false, type: Boolean });
@@ -141,8 +145,19 @@ const saveInsurance = () => {
     axios
         .post("/api/insurance", insuranceData)
         .then(() => {
-            console.log("Insurance saved successfully.");
+            $q.notify({
+                type: "positive",
+                message: "Success",
+                caption: "New insurance saved successfully.",
+                position: "bottom-right",
+                timeout: 4000,
+                progress: true,
+
+            });
+            emit("insuranceAdded");
+
             closeModal();
+
         })
         .catch((error) => {
             console.error("Error saving insurance:", error);

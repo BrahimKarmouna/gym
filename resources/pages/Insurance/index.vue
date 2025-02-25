@@ -2,7 +2,7 @@
     <!-- Modal for creating insurance -->
     <CreateForm
         v-model:visible="is_visible"
-        @saved="getInsurances"
+        @insuranceAdded="Refresh"
     />
 
     <q-btn
@@ -36,7 +36,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import CreateForm from './CreateForm.vue';
+import CreateForm from './createForm.vue';
 
 // Visibility control for modal
 const is_visible = ref(false);
@@ -81,7 +81,9 @@ const getInsurances = () => {
             console.error('Error fetching insurance data:', error);
         });
 };
-
+const Refresh = () => {
+    getInsurances();
+};
 // const getInsurancesPlans = () => {
 //     axios
 //         .get('/api/insurance-plans') // Assumes API returns { clients: [...], plans: [...] }

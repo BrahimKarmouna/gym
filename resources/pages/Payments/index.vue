@@ -2,7 +2,7 @@
     <CreateForm
         :visible="is_visible"
         @update:visible="is_visible = $event"
-        @payment="handlePayment"
+        @new_payment="refreshPayments"
     />
 
 
@@ -25,8 +25,8 @@
             <q-td :props="props">
                 <q-btn
                     color="negative"
-                    label="Delete"
-                    @click="deletePayment(props.row.id)"
+                    icon="delete"
+                    @click="confirmDeletePayment(props.row.id)"
                 />
             </q-td>
         </template>
@@ -37,6 +37,9 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import CreateForm from './createForm.vue';
+import { useQuasar } from 'quasar';
+const $q = useQuasar();
+
 
 const is_visible = ref(false);
 
@@ -92,19 +95,36 @@ const getPayments = () => {
             console.error('Error fetching payments:', error);
         });
 };
-
-const deletePayment = (id) => {
-    axios
-        .delete(`/api/payments/${id}`)
-        .then(() => {
-            console.log('Payment deleted successfully.');
-            getPayments();
-        })
-        .catch((error) => {
-            console.error('Error deleting payment:', error);
-        });
+const confirmDeletePayment = (id) => {
+    $q.dialog({
+        title: "Delete Payment",
+        message: "Are you sure you want to delete this payment?",
+        cancel: true,
+        persistent: true,
+    }).onOk(() => deletePayment(id));
 };
 
+const deletePayment = async (id) => {
+    try {
+        await axios.delete(`/api/payments/${id}`);
+        console.log("Payment deleted.");
+        $q.notify({
+            color: "positive",
+            message: "Payment deleted successfully.",
+            position: "bottom-right",
+            icon: "check",
+            timeout: 4000
+
+        });
+        getPayments();
+    } catch (error) {
+        console.error("Failed to delete payment:", error);
+    }
+};
+
+const refreshPayments = () => {
+    getPayments();
+};
 onMounted(() => {
     getPayments();
 });
@@ -127,9 +147,14 @@ const handlePayment = (paymentData) => {
 
     axios.post("/api/payments", paymentData)
         .then(() => {
-            console.log("Payment saved successfully.");
             getPayments();  // Refresh table first
             is_visible.value = false;  // Close modal after successful update
+            $q.notify({
+                color: "green-4",
+                textColor: "white",
+                icon: "check",
+                message: "Payment saved successfully.",
+            });
         })
         .catch((error) => {
             console.error("Error saving payment:", error);

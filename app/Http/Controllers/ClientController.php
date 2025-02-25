@@ -20,50 +20,50 @@ class ClientController extends Controller
     public function index(Request $request)
     {
         $clients = QueryBuilder::for(Client::class)
-            ->allowedFilters([
-                AllowedFilter::exact('full_name', 'Full_name'),
-            ])
+            ->allowedFilters([AllowedFilter::exact('full_name', 'Full_name')])
             ->allowedSorts([
                 AllowedSort::field('id', 'id'),
                 AllowedSort::field('created_at', 'created_at'),
             ])
-            ->with('payments.plan')
+            ->with('payments.plan') // Including the related payment and plan data
             ->when($request->input('search'), function ($query) use ($request) {
                 $query->where('Full_name', 'like', '%' . $request->input('search') . '%')
                     ->orWhere('email', 'like', '%' . $request->input('search') . '%');
             })
             ->get()->map(function ($client) {
                 $phone = $client->phone;
-
                 if ($phone) {
-                    // Remove all non-numeric characters
                     $phone = preg_replace('/\D/', '', $phone);
-
-                    // Example: Format as "+212 6XX-XXX-XXX" (for Moroccan numbers)
                     if (strlen($phone) === 10 && substr($phone, 0, 1) === '0') {
                         $phone = '+212 ' . substr($phone, 1, 1) . substr($phone, 2, 3) . '-' . substr($phone, 5, 3) . '-' . substr($phone, 8, 2);
                     }
                 }
 
-                // Get the latest payment for the client
+                // Check if the client has an active subscription (payment expiration check)
                 $latestPayment = $client->payments->sortByDesc('payment_date')->first();
-
-                // Determine plan status
                 $is_payed = 0; // Default if no payments found
-                if ($latestPayment) {
+                if ($latestPayment && $client->subscription_expired_date) {
                     $expirationDate = Carbon::parse($client->subscription_expired_date);
                     $is_payed = $expirationDate->isFuture() ? 1 : 0;
                 }
 
-                // Add plan status to client object
+                // Check if the client has active insurance
+                $latestInsurance = $client->insurances->sortByDesc('expiry_date')->first();
+                $is_assured = 0; // Default if no insurances found
+                if ($latestInsurance && $client->assurance_expired_date) {
+                    $expirationDate = Carbon::parse($client->assurance_expired_date);
+                    $is_assured = $expirationDate->isFuture() ? 1 : 0;
+                }
+
+                // Add subscription status to client object
                 $client->phone = $phone;
                 $client->is_payed = $is_payed;
+                $client->is_assured = $is_assured;
 
                 return $client;
             });
 
         return $clients;
-
     }
 
     public function fetchClients(Request $request)
