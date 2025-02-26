@@ -70,9 +70,20 @@ class InsurancePlansController extends Controller
      */
     public function destroy($id)
     {
+        // Find the insurance plan
         $plan = InsurancePlan::findOrFail($id);
+
+        // Check if the insurance plan is associated with any insurance record
+        if ($plan->insurances()->exists()) {
+            return response()->json([
+                'message' => 'Cannot delete insurance plan. It is associated with insurance records.'
+            ], 400);
+        }
+
+        // Delete the insurance plan
         $plan->delete();
 
         return response()->json(['message' => 'Insurance plan deleted successfully']);
     }
+
 }

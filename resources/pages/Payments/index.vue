@@ -109,11 +109,12 @@ const deletePayment = async (id) => {
         await axios.delete(`/api/payments/${id}`);
         console.log("Payment deleted.");
         $q.notify({
-            color: "positive",
-            message: "Payment deleted successfully.",
+            type: "positive",
+            message: "Success",
+            caption: "Payment deleted successfully.",
             position: "bottom-right",
-            icon: "check",
-            timeout: 4000
+            timeout: 4000,
+            progress: true,
 
         });
         getPayments();

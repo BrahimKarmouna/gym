@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-
 // Import your components for routing
 import Dashboard from "../pages/Dashboard/Dashboard.vue";
 import NotFoundPage from "../pages/NotFoundPage.vue";

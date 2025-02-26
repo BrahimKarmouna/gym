@@ -26,7 +26,7 @@
                 <q-btn
                     color="negative"
                     label="Delete"
-                    @click="deleteInsurancePlan(props.row.id)"
+                    @click="confirmDeleteInsurancePlan(props.row.id)"
                 />
             </q-td>
         </template>
@@ -37,6 +37,8 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import CreateForm from './CreateForm.vue';
+import { useQuasar } from 'quasar';
+const $q = useQuasar();
 
 // Visibility control for modal
 const is_visible = ref(false);
@@ -70,18 +72,50 @@ const getInsurancePlans = () => {
         });
 };
 
+const confirmDeleteInsurancePlan = (id) => {
+    $q.dialog({
+        title: "Delete Insurance plan",
+        message: "Are you sure you want to delete this insurance plan?",
+        cancel: true,
+        persistent: true,
+
+        icon: "warning",
+        color: "negative",
+    }).onOk(() => deleteInsurancePlan(id));
+};
 // Delete an insurance plan based on ID
 const deleteInsurancePlan = (id) => {
     axios
         .delete(`/api/insurance-plans/${id}`)
         .then(() => {
-            console.log('Insurance plan deleted successfully.');
+            $q.notify({
+                color: 'positive',
+                message: 'Insurance plan deleted successfully.',
+                position: 'bottom-right',
+                component: 'q-icon',
+                icon: 'check',
+                timeout: 4000,
+            });
             getInsurancePlans(); // Refresh the list
         })
         .catch((error) => {
-            console.error('Error deleting insurance plan:', error);
+            const errorMessage = error.response && error.response.data
+                ? error.response.data.message
+                : 'Failed to delete insurance plan.';
+
+            // Notify the user
+            $q.notify({
+                color: 'negative',
+                message: errorMessage,
+                position: 'bottom-right',
+                timeout: 4000,
+                component: 'q-icon',
+                icon: 'report_problem',
+                classes: 'w-80',
+            });
         });
 };
+
 
 // Fetch insurance plans on component mount
 onMounted(() => {

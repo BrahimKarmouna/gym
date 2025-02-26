@@ -20,4 +20,9 @@ class InsurancePlan extends Model
         return $this->belongsTo(Client::class); // InsurancePlan belongs to Client
     }
 
+    public function insurances()
+    {
+        return $this->hasMany(Insurance::class); // InsurancePlan belongs to Insurance
+    }
+
 }

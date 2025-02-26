@@ -1,5 +1,5 @@
 <template>
-        <CreateForm v-model:visible="is_visible" />
+    <CreateForm v-model:visible="is_visible" />
 
     <q-card-section class=" pt-10 shadow-none">
         <q-btn

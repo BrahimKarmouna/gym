@@ -71,7 +71,7 @@ import { ref } from "vue";
 import axios from "axios";
 import { useQuasar } from 'quasar';
 const $q = useQuasar();
-
+const emit = defineEmits(["saved"]);
 
 
 const visible = defineModel("visible", { default: false, type: Boolean });
@@ -112,7 +112,9 @@ const saveInsurancePlan = () => {
                 progress: true,
 
             });
+
             closeModal();
+            emit("saved");
             console.log("Insurance Plan saved successfully.");
             // Close modal after saving
         })

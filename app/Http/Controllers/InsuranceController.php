@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Insurance;  // Ensure this is imported
@@ -62,4 +61,73 @@ class InsuranceController extends Controller
             'new_expiration_date' => $newInsuranceExpiration
         ]);
     }
+
+    public function show($id)
+    {
+        $insurance = Insurance::findOrFail($id);
+        return response()->json($insurance);
+    }
+    public function update(Request $request, $id)
+    {
+        $insurance = Insurance::findOrFail($id);
+
+        $request->validate([
+            'client_id' => 'exists:clients,id',
+            'insurance_plan_id' => 'exists:insurance_plans,id',
+            'payment_date' => 'date',
+            'expiry_date' => 'date',
+        ]);
+
+        $client = $insurance->client;
+        $plan = $insurance->plan;
+
+        // Update the insurance record
+        $insurance->update([
+            'client_id' => $request->input('client_id', $insurance->client_id),
+            'insurance_plan_id' => $request->input('insurance_plan_id', $insurance->insurance_plan_id),
+            'payment_date' => $request->input('payment_date', $insurance->payment_date),
+            'expiry_date' => $request->input('expiry_date', $insurance->expiry_date),
+        ]);
+
+        // Update the client's insurance expiration date if necessary
+        if ($client && $plan) {
+            $insuranceExpiration = Carbon::parse($insurance->expiry_date);
+            $newInsuranceExpiration = $insuranceExpiration->addMonths($plan->duration);
+            $client->update(['assurance_expired_date' => $newInsuranceExpiration]);
+        }
+
+        return response()->json([
+            'message' => 'Insurance updated successfully.',
+            'insurance' => $insurance
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $insurance = Insurance::findOrFail($id);
+        $insurance->delete();
+
+        return response()->json(['message' => 'Insurance deleted successfully']);
+    }
+
+    // public function destroy($id)
+    // {
+    //     $insurance = Insurance::findOrFail($id);
+    //     $client = $insurance->client;
+    //     $plan = $insurance->plan;
+
+    //     // Delete the insurance record
+    //     $insurance->delete();
+
+    //     // Update the client's insurance expiration date if necessary
+    //     if ($client && $plan) {
+    //         $latestInsurance = $client->insurances->sortByDesc('expiry_date')->first();
+    //         $newInsuranceExpiration = $latestInsurance ? Carbon::parse($latestInsurance->expiry_date) : null;
+    //         $client->update(['assurance_expired_date' => $newInsuranceExpiration]);
+    //     }
+
+    //     return response()->json([
+    //         'message' => 'Insurance deleted successfully.'
+    //     ]);
+    // }
 }

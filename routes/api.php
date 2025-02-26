@@ -74,7 +74,7 @@ Route::prefix('insurance-plans')->group(function () {
     Route::put('/{id}', [InsurancePlansController::class, 'updatePlan']);
 
     // Delete an insurance plan
-    Route::delete('/{id}', [InsurancePlansController::class, 'deletePlan']);
+    Route::delete('/{id}', [InsurancePlansController::class, 'destroy']);
 });
 
 // Insurance Routes (for creating a client's insurance and associating them with a plan)

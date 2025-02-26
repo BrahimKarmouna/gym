@@ -18,8 +18,21 @@
 
                 <q-card-section class="q-pt-none">
                     <div class="row q-col-gutter-md">
+
+
+                        <q-input
+                            v-if="client"
+                            :model-value="client.Full_name"
+                            label="Client"
+                            filled
+                            class="col-6 q-mb-md"
+                            disable
+                        />
+
+
                         <!-- Client Selection -->
                         <q-select
+                            v-else
                             v-model="insurance.client"
                             :options="clients"
                             label="Select Client"
@@ -85,20 +98,17 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { useQuasar } from 'quasar';
-import { defineEmits, defineModel } from "vue";
+import { defineEmits, defineModel, defineProps } from "vue";
 const $q = useQuasar();
 const emit = defineEmits(["assuranceAdded"]);
-
+const props = defineProps({
+    client: Object // Optional: Preselected client
+});
 // Visibility control
 const visible = defineModel("visible", { default: false, type: Boolean });
 
 // Insurance form model
-const insurance = ref({
-    client: null,   // Client ID will be selected here
-    plan: null,     // Plan ID will be selected here
-    payment_date: "2025-02-21", // Default payment date
-    expiry_date: "2025-12-31", // Default expiry date (you can change as needed)
-});
+
 
 // Clients and plans data
 const clients = ref([]);
@@ -133,11 +143,19 @@ const resetInsurance = () => {
     };
 };
 
+const insurance = ref({
+    client: null,   // Ensure client starts as null and gets updated properly
+    plan: null,     // Ensure plan starts as null and gets updated properly
+    payment_date: new Date().toISOString().substr(0, 10), // Set default payment date
+    expiry_date: new Date().toISOString().substr(0, 10),  // Set default expiry date
+});
+
+
 // Save insurance to the backend
 const saveInsurance = () => {
     // Prepare the payload by sending only the required IDs and dates
     const insuranceData = {
-        client_id: insurance.value.client.id,
+        client_id: props.client?.id ?? insurance.value.client.id,
         insurance_plan_id: insurance.value.plan.id,
         payment_date: insurance.value.payment_date,
         expiry_date: insurance.value.expiry_date,
